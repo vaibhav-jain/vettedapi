@@ -1,13 +1,9 @@
-# skeleton
-A simple Django starter template
+# VettedAPI
+POC for Vetted
 
 ## Setup Instructions ##
-1. Make sure you have Django-1.9 installed on your system
-2. Create your new Django project by running this command
-
-  `django-admin.py startproject mynewproject --template=https://github.com/kaizentech/skeleton/archive/master.zip`
-
-3. Install requirements by running this command from your project dir
+1. Make sure you have Django-2.0.9 installed on your system
+2. Install requirements by running this command from your project dir
 
   On Prod:
 
@@ -17,8 +13,7 @@ A simple Django starter template
 
   `pip install -r requirements/dev.txt`
 
-4. Setup these environment variables on your system (or in virtualenv)
-
+3. Setup these environment variables on your system (or in virtualenv)
 
 On Windows
 
@@ -27,6 +22,9 @@ On Windows
   set "DJANGO_SETTINGS_MODULE=config.settings.dev"
   set "SECRET_KEY=xxxxxYourxxSecretxxKeyxxxxx"
   set "DATABASE_URL=psql://username:password@127.0.0.1:5432/dbname"
+  set "EMAIL_HOST=smtp.something.com"
+  set "EMAIL_HOST_USER=youremail@something.com"
+  set "EMAIL_HOST_PASSWORD=yoursecretpassword"
 ```
 
   On Linux
@@ -36,15 +34,18 @@ On Windows
   export DJANGO_SETTINGS_MODULE='config.settings.dev'
   export SECRET_KEY='xxxxxYourxxSecretxxKeyxxxxx'
   export DATABASE_URL='psql://username:password@127.0.0.1:5432/dbname'
+  export "EMAIL_HOST=smtp.something.com"
+  export "EMAIL_HOST_USER=youremail@something.com"
+  export "EMAIL_HOST_PASSWORD=yoursecretpassword"
 ```
 
 You can also save these in your virtualenv's script for auto invocation during virtualenv initialization
 
-5. Apply Migrations by running this command from the project dir
+4. Apply Migrations by running this command from the project dir
 
   `python manage.py migrate`
 
-6. Create Super User
+5. Create Super User
 
   `python manage.py createsuperuser`
 
@@ -52,8 +53,10 @@ You can also save these in your virtualenv's script for auto invocation during v
 
   `python manage.py runserver`
 
+7. Visit http://localhost:8000/
+
 # Goodies Included #
-1. Seprate settings for development and production environment
+1. Separate settings for development and production environment
 2. Settings based on [django-environ](https://django-environ.readthedocs.org/en/latest/)
 3. Excellent admin interface by [django-grappelli](https://django-grappelli.readthedocs.org/en/latest/index.html)
 4. Static file serving with [whitenoise](https://github.com/evansd/whitenoise)

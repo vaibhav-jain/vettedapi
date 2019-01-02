@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-token-refresh/', refresh_jwt_token),
     url(r'^api-token-verify/', verify_jwt_token),
-    url(r'^docs/$', schema_view.with_ui('redoc', cache_timeout=None), name='schema-redoc'),
+    url(r'^$', schema_view.with_ui('redoc', cache_timeout=None), name='schema-redoc'),
 ] + static.static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 admin.site.site_title = 'Vettedapi Administration'

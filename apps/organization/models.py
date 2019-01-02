@@ -35,3 +35,4 @@ class Employee(models.Model):
     """
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     profile = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_admin = models.BooleanField(default=False)

@@ -3,6 +3,8 @@ from rest_framework import viewsets, serializers
 
 from apps.organization.models import *
 from utils import DUPLICATE_USER_ERROR_MSG
+
+from utils.permissions import IsCompanyUser
 from .serializers import *
 
 
@@ -15,10 +17,14 @@ class CompanyViewSet(viewsets.ModelViewSet):
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+    permission_classes = (IsCompanyUser,)
+    http_method_names = [
+        'get', 'patch', 'delete', 'options'
+    ]
 
     def create(self, request, *args, **kwargs):
         duplicate = User.objects.filter(
-            username=request.data['profile.username']
+            username=request.data['profile']['username']
         ).exists()
 
         if duplicate:
@@ -28,7 +34,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
         duplicate = User.objects.filter(
-            username=request.data['profile.username']
+            username=request.data['profile']['username']
         ).exclude(pk=instance.profile.pk).exists()
 
         if duplicate:
