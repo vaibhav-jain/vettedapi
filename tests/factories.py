@@ -9,7 +9,8 @@ USER_MODEL = get_user_model()
 
 __all__ = [
     'CompanyFactory',
-    'UserFactory'
+    'UserFactory',
+    'EmployeeFactory'
 ]
 
 
@@ -39,17 +40,5 @@ class UserFactory(factory.DjangoModelFactory):
 
 
 class EmployeeFactory(factory.DjangoModelFactory):
-    first_name = factory.fuzzy.FuzzyText(length=15)
-    middle_name = factory.fuzzy.FuzzyText(length=15)
-    last_name = factory.fuzzy.FuzzyText(length=15)
-    phone_number = '+919999999999'
-    gender = 'M'
-    email = ''
-
     class Meta:
         model = Employee
-
-#
-# class ProfileFactory(factory.DjangoModelFactory):
-#     class Meta:
-#         model = Profile

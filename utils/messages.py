@@ -2,10 +2,15 @@
 This module contains various success and error messages
 """
 
-DUPLICATE_USER_ERROR_MSG = "A user with that username already exists"
+DUPLICATE_USER_ERROR_MSG = "A user with that username already exists."
 DUPLICATE_COMPANY_ERROR_MSG = "company with this name already exists."
+DUPLICATE_EMAIL_ID_ERROR_MSG = "A user is already registered with this e-mail address."
 INVALID_FIRST_NAME_ERROR_MSG = "Enter a valid first name."
 INVALID_LAST_NAME_ERROR_MSG = "Enter a valid last name."
 COMPANY_DOES_NOT_EXIST_ERROR_MSG = "Company doesn't exist."
 REQUIRED_FIELD_ERROR_MSG = "This field is required."
-BLANK_FIELD_ERROR_MSG = 'This field may not be blank.'
+BLANK_FIELD_ERROR_MSG = "This field may not be blank."
+PASSWORD_MISMATCH_ERROR_MSG = "The two password fields didn't match."
+INVALID_UUID_ERROR_MSG = "Must be a valid UUID."
+INVALID_BOOLEAN_ERROR_MSG = "Must be a valid boolean."
+INVALID_EMAIL_ID_ERROR_MSG = "Enter a valid email address."

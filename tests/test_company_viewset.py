@@ -15,9 +15,9 @@ class CompanyViewSetTestCase(BaseViewSetTestCase):
         super(CompanyViewSetTestCase, self).setUp()
         self.companies_url = reverse_lazy('api:company-list')
 
-    def test_post_empty_json_failing(self):
+    def test_post_empty_data_failing(self):
         """
-        Ensure POSTing form over /companies/ with invalid data fails.
+        Ensure POSTing form over /companies/ with empty data fails.
         """
         response = self.client.post(self.companies_url, self.payload, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -50,7 +50,7 @@ class CompanyViewSetTestCase(BaseViewSetTestCase):
         self.assertEqual(response.json()['website'], [BLANK_FIELD_ERROR_MSG])
         self.assertEqual(response.json()['address'], [REQUIRED_FIELD_ERROR_MSG])
 
-    def test_post_valid_form_passing(self):
+    def test_post_valid_data_passing(self):
         """
         Ensure POSTing form over /companies/ with valid data passes.
         """
@@ -73,9 +73,9 @@ class CompanyViewSetTestCase(BaseViewSetTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_get_valid_pk_passing(self):
+    def test_get_valid_hash_passing(self):
         """
-        Ensure GETing over /companies/<hash>/ with valid pk passes.
+        Ensure GETing over /companies/<hash>/ with valid hash passes.
         """
         company = CompanyFactory()
         url = reverse_lazy(
@@ -100,7 +100,7 @@ class CompanyViewSetTestCase(BaseViewSetTestCase):
         response = self.client.patch(url, self.payload, format='json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_patch_valid_pk_passing(self):
+    def test_patch_valid_hash_passing(self):
         """
         Ensure PATCHing over /companies/<hash>/ with valid hash passes.
         """

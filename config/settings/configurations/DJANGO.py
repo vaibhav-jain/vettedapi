@@ -28,7 +28,8 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'drf_yasg',
     'corsheaders',
-    'apps.organization'
+    'apps.organization',
+    'apps.api'
 ]
 
 MIDDLEWARE = [
