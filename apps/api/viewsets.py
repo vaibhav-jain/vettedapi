@@ -4,7 +4,7 @@ from rest_framework import viewsets, serializers
 from apps.organization.models import *
 from utils import DUPLICATE_USER_ERROR_MSG
 
-# from utils.permissions import IsCompanyUser
+from utils.permissions import IsCompanyUser
 from .serializers import *
 
 
@@ -17,7 +17,7 @@ class CompanyViewSet(viewsets.ModelViewSet):
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
-    # permission_classes = (IsCompanyUser,)
+    permission_classes = (IsCompanyUser,)
     http_method_names = [
         'get', 'patch', 'delete', 'options'
     ]

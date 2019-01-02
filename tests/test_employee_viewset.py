@@ -2,6 +2,7 @@ from django.core import mail
 from django.urls import reverse_lazy
 from rest_framework import status
 
+from apps.organization.models import Employee
 from utils.messages import *
 from .base import BaseViewSetTestCase
 from .factories import *
@@ -43,6 +44,20 @@ class EmployeeViewSetTestCase(BaseViewSetTestCase):
         response = self.client.post(self.signup_url, payload, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_user_permission(self):
+        """
+        Ensure Patching form over /employees/<company_id>/<pk>/ with invalid permission fails.
+        """
+        url = reverse_lazy(
+            'api:employee-detail', kwargs={
+                'company_id': self.company.hash,
+                'pk': 'pk'
+            })
+        self.payload = {}
+        response = self.client.patch(url, self.payload, format='json')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.json()['detail'], INVALID_PERMISSION_ERROR_MSG)
+
     def test_valid_form_passing_signup(self):
         """
         Ensure POSTing form over /signup/ with valid payload passes
@@ -78,6 +93,9 @@ class EmployeeViewSetTestCase(BaseViewSetTestCase):
             'company': '',
             'is_admin': ''
         }
+        employee = Employee.objects.create(
+            company=self.company, profile=self.user
+        )
         response = self.client.post(self.signup_url, payload, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -105,19 +123,22 @@ class EmployeeViewSetTestCase(BaseViewSetTestCase):
 
     def test_get_invalid_hash_failing(self):
         """
-        Ensure GETing over /employees/<pk>/ with invalid pk fails.
+        Ensure GETing over /employees/<company_id>/<pk>/ with invalid pk fails.
         """
         url = reverse_lazy(
             'api:employee-detail', kwargs={
                 'company_id': self.company.hash,
                 'pk': 'INVALID-PK'
             })
+        employee = Employee.objects.create(
+            company=self.company, profile=self.user
+        )
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_get_valid_pk_passing(self):
         """
-        Ensure GETing over /companies/<hash>/ with valid pk passes.
+        Ensure GETing over /employees/<company_id>/<pk>/ with valid pk passes.
         """
         employee = EmployeeFactory(company=self.company, profile=self.user)
         url = reverse_lazy(
@@ -133,7 +154,7 @@ class EmployeeViewSetTestCase(BaseViewSetTestCase):
 
     def test_patch_invalid_pk_failing(self):
         """
-        Ensure PATCHing json over /companies/<pk>/ with invalid hash fails.
+        Ensure PATCHing json over /employees/<company_id>/<pk>/ with invalid hash fails.
         """
         url = reverse_lazy(
             'api:employee-detail', kwargs={
@@ -146,12 +167,15 @@ class EmployeeViewSetTestCase(BaseViewSetTestCase):
                 'last_name': 'Test last name'
             }
         }
+        employee = Employee.objects.create(
+            company=self.company, profile=self.user
+        )
         response = self.client.patch(url, self.payload, format='json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_patch_valid_pk_passing(self):
         """
-        Ensure PATCHing over /employees/<pk>/ with valid pk passes.
+        Ensure PATCHing over /employees/<company_id>/<pk>/ with valid pk passes.
         """
         employee = EmployeeFactory(company=self.company, profile=self.user)
         url = reverse_lazy(

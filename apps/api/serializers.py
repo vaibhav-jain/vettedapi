@@ -25,7 +25,7 @@ class SignupSerializer(RegisterSerializer):
         RegexValidator(r'^[ a-zA-Z ]*$', INVALID_LAST_NAME_ERROR_MSG)
     ])
     company = serializers.UUIDField(required=True)
-    is_admin = serializers.BooleanField(required=True)
+    is_admin = serializers.BooleanField(required=False)
 
     def validate_company(self, company):
         try:

@@ -53,6 +53,8 @@ You can also save these in your virtualenv's script for auto invocation during v
 
   `python manage.py runserver`
 
+7. Visit http://localhost:8000/
+
 # Goodies Included #
 1. Separate settings for development and production environment
 2. Settings based on [django-environ](https://django-environ.readthedocs.org/en/latest/)
